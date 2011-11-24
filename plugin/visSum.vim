@@ -43,8 +43,8 @@ function! <SID>SumNumbers(...) range  "{{{
 		let y1      = line("'<")
 		let y2      = line("'>")
 		while y1 <= y2
-			let l:cur = matchstr( getline(y1), '-\{-}\d\+' )
-			let l:sum += l:cur
+			let l:cur = matchstr( getline(y1), '-\{-}\d\+\(\.\d\+\)\?' )
+			let l:sum += str2float(l:cur)
 			let y1 += 1
 		endwhile
 	elseif visualmode() == "\<c-v>"
@@ -55,15 +55,15 @@ function! <SID>SumNumbers(...) range  "{{{
 		while y1 <= y2
 			let line = getline(y1)
 			let chunk = strpart(line, x1, len)
-			let l:cur = matchstr( strpart(getline(y1), x1, len ), '-\{-}\d\+' )
-			let l:sum += l:cur
+			let l:cur = matchstr( strpart(getline(y1), x1, len ), '-\{-}\d\+\(\.\d\+\)\?' )
+			let l:sum += str2float(l:cur)
 			let y1 += 1
 		endwhile
 	else
 		echoerr "You must select some text in visual mode first"
 		return
 	endif
-	redraw | echomsg "sum = " . l:sum 
+	redraw | echomsg "sum = " . string(l:sum)
 	"save the sum in the variable b:sum, and optionally
 	"into the register specified by the user
 	let b:sum = l:sum

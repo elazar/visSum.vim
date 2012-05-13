@@ -51,7 +51,7 @@ function! <SID>SumNumbers(...) range  "{{{
 		let y1      = line("'<")
 		let y2      = line("'>")
 		let x1		= col("'<") - 1
-		let len		= col("'>") - x1
+		let len		= virtcol("'>") - x1
 		while y1 <= y2
 			let line = getline(y1)
 			let chunk = strpart(line, x1, len)
